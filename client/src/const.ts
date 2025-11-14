@@ -1,8 +1,14 @@
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
-export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "App";
+export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "Taj Tailor";
+export const SHOP_NAME = "Taj Tailor";
+export const SHOP_TAGLINE = "Custom Shalwar Kameez - Karachi's Finest Tailoring";
+export const SHOP_PHONE = "+92-300-XXXXXXX";
+export const SHOP_EMAIL = "info@tajtailor.com";
+export const SHOP_ADDRESS = "Karachi, Pakistan";
+export const SHOP_HOURS = "Monday - Saturday: 10:00 AM - 6:00 PM | Sunday: Closed";
 
-export const APP_LOGO = "https://placehold.co/128x128/E1E7EF/1F2937?text=App";
+export const APP_LOGO = "https://placehold.co/128x128/1F3A5F/D4AF37?text=Taj+Tailor";
 
 // Generate login URL at runtime so redirect URI reflects the current origin.
 export const getLoginUrl = () => {
