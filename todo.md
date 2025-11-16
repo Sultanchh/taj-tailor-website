@@ -42,3 +42,11 @@
 - [ ] Test responsive design on mobile
 - [ ] Create checkpoint before deployment
 - [ ] Deploy website
+
+## Stripe Payment Integration
+- [ ] Set up Stripe feature in project
+- [ ] Create products/services database table
+- [ ] Implement Stripe checkout page
+- [ ] Add payment success/failure handling
+- [ ] Create order payment tracking
+- [ ] Add payment history to admin panel
