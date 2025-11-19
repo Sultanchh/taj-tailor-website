@@ -1,9 +1,20 @@
-import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { APP_LOGO, APP_TITLE, SHOP_TAGLINE, SHOP_NAME } from "@/const";
 import { Scissors, Sparkles, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { trpc } from "@/lib/trpc";
+import { Loader2 } from "lucide-react";
 
 export default function Home() {
+  const { data: businessInfo, isLoading: businessLoading } = trpc.businessInfo.get.useQuery();
+
+  // Use business info if available, otherwise use defaults
+  const shopPhone = businessInfo?.shopPhone || "+92-300-1234567";
+  const shopEmail = businessInfo?.shopEmail || "info@tajtailor.com";
+  const shopCity = businessInfo?.shopCity || "Karachi";
+  const shopCountry = businessInfo?.shopCountry || "Pakistan";
+  const shopAddress = businessInfo?.shopAddress || "Heart of Karachi";
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
@@ -48,7 +59,7 @@ export default function Home() {
           </p>
           
           <p className="text-lg text-white/80 mb-12 max-w-2xl mx-auto">
-            Experience the perfect blend of tradition and craftsmanship. Visit Taj Tailor in Karachi for bespoke tailoring that celebrates your style.
+            Experience the perfect blend of tradition and craftsmanship. Visit Taj Tailor in {shopCity} for bespoke tailoring that celebrates your style.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -58,7 +69,7 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="/gallery">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
                 View Designs
               </Button>
             </Link>
@@ -67,37 +78,27 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="container">
           <h2 className="text-4xl font-serif font-bold text-center mb-16">Our Services</h2>
-          
           <div className="grid md:grid-cols-2 gap-12">
-            <div className="flex gap-6">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-14 w-14 rounded-lg bg-primary/10">
-                  <Sparkles className="h-7 w-7 text-primary" />
-                </div>
+            <div className="bg-white rounded-xl p-8 shadow-md border border-border">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                <Scissors className="w-6 h-6 text-primary" />
               </div>
-              <div>
-                <h3 className="text-xl font-serif font-bold mb-3">Custom Stitching</h3>
-                <p className="text-muted-foreground">
-                  Bring your vision to life with our expert custom stitching services. We create beautiful, perfectly fitted shalwar kameez tailored to your preferences.
-                </p>
-              </div>
+              <h3 className="text-2xl font-serif font-bold mb-4">Custom Stitching</h3>
+              <p className="text-muted-foreground">
+                Bring your vision to life with our expert custom stitching services. We create beautiful, perfectly fitted shalwar kameez tailored to your preferences.
+              </p>
             </div>
-            
-            <div className="flex gap-6">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-14 w-14 rounded-lg bg-accent/10">
-                  <Scissors className="h-7 w-7 text-accent" />
-                </div>
+            <div className="bg-white rounded-xl p-8 shadow-md border border-border">
+              <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+                <Sparkles className="w-6 h-6 text-accent" />
               </div>
-              <div>
-                <h3 className="text-xl font-serif font-bold mb-3">Professional Alterations</h3>
-                <p className="text-muted-foreground">
-                  Perfect fit guaranteed. Our skilled tailors provide professional alteration services to ensure your garments fit you beautifully.
-                </p>
-              </div>
+              <h3 className="text-2xl font-serif font-bold mb-4">Professional Alterations</h3>
+              <p className="text-muted-foreground">
+                Perfect fit guaranteed. Our skilled tailors provide professional alteration services to ensure your garments fit you beautifully.
+              </p>
             </div>
           </div>
         </div>
@@ -110,7 +111,7 @@ export default function Home() {
             <div>
               <h2 className="text-4xl font-serif font-bold mb-6">Why Choose Taj Tailor?</h2>
               <p className="text-lg text-muted-foreground mb-6">
-                With years of experience in traditional tailoring, Taj Tailor has become Karachi's trusted name for custom shalwar kameez. We combine traditional craftsmanship with modern design sensibilities.
+                With years of experience in traditional tailoring, Taj Tailor has become {shopCity}'s trusted name for custom shalwar kameez. We combine traditional craftsmanship with modern design sensibilities.
               </p>
               <ul className="space-y-4">
                 <li className="flex gap-3">
@@ -139,9 +140,16 @@ export default function Home() {
               <div className="inline-block p-8 bg-white rounded-xl shadow-lg">
                 <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
                 <h3 className="text-2xl font-serif font-bold mb-2">Visit Us</h3>
-                <p className="text-muted-foreground mb-6">
-                  Located in the heart of Karachi
+                <p className="text-muted-foreground mb-2">
+                  Located in the heart of {shopCity}
                 </p>
+                {businessLoading ? (
+                  <div className="flex justify-center mb-4">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground mb-6">{shopAddress}</p>
+                )}
                 <Link href="/contact">
                   <Button variant="outline" className="w-full">Get Directions</Button>
                 </Link>
@@ -173,7 +181,7 @@ export default function Home() {
             <div>
               <h4 className="font-serif font-bold mb-4">{SHOP_NAME}</h4>
               <p className="text-sm text-muted-foreground">
-                Karachi's premier destination for custom shalwar kameez tailoring.
+                {shopCity}'s premier destination for custom shalwar kameez tailoring.
               </p>
             </div>
             <div>
@@ -195,14 +203,14 @@ export default function Home() {
             <div>
               <h4 className="font-serif font-bold mb-4">Contact</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="tel:+923001234567" className="text-muted-foreground hover:text-primary">+92-300-1234567</a></li>
-                <li><a href="mailto:info@tajtailor.com" className="text-muted-foreground hover:text-primary">info@tajtailor.com</a></li>
-                <li><span className="text-muted-foreground">Karachi, Pakistan</span></li>
+                <li><a href={`tel:${shopPhone}`} className="text-muted-foreground hover:text-primary">{shopPhone}</a></li>
+                <li><a href={`mailto:${shopEmail}`} className="text-muted-foreground hover:text-primary">{shopEmail}</a></li>
+                <li><span className="text-muted-foreground">{shopCity}, {shopCountry}</span></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} {SHOP_NAME}. All rights reserved.</p>
+            <p>&copy; 2025 {SHOP_NAME}. All rights reserved.</p>
           </div>
         </div>
       </footer>

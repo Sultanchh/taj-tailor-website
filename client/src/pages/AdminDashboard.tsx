@@ -3,7 +3,8 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, LogOut, Image, Users, Package, Settings } from "lucide-react";
+import { Loader2, LogOut, Image, Users, Package, Settings, Lock } from "lucide-react";
+import { getLoginUrl } from "@/const";
 import AdminGallery from "@/pages/admin/AdminGallery";
 import AdminCustomers from "@/pages/admin/AdminCustomers";
 import AdminOrders from "@/pages/admin/AdminOrders";
@@ -22,20 +23,67 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!isAuthenticated || user?.role !== "admin") {
+  // Not logged in - show login button
+  if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <h1 className="text-3xl font-serif font-bold mb-4">Access Denied</h1>
-          <p className="text-muted-foreground mb-6">You must be logged in as an admin to access this page.</p>
-          <Button onClick={() => setLocation("/")} variant="outline">
-            Back to Home
-          </Button>
+        <div className="text-center max-w-md">
+          <div className="mb-6 flex justify-center">
+            <Lock className="w-16 h-16 text-primary" />
+          </div>
+          <h1 className="text-3xl font-serif font-bold mb-4">Admin Dashboard</h1>
+          <p className="text-muted-foreground mb-8">
+            Please log in to access the admin panel and manage your Taj Tailor business.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Button 
+              onClick={() => window.location.href = getLoginUrl()} 
+              className="w-full gap-2"
+              size="lg"
+            >
+              Sign In with Manus
+            </Button>
+            <Button onClick={() => setLocation("/")} variant="outline" className="w-full">
+              Back to Home
+            </Button>
+          </div>
         </div>
       </div>
     );
   }
 
+  // Logged in but not admin - show access denied
+  if (user?.role !== "admin") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center max-w-md">
+          <div className="mb-6 flex justify-center">
+            <Lock className="w-16 h-16 text-destructive" />
+          </div>
+          <h1 className="text-3xl font-serif font-bold mb-4">Access Denied</h1>
+          <p className="text-muted-foreground mb-8">
+            You do not have admin privileges. Only administrators can access this page.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Button 
+              onClick={() => {
+                logout();
+                setLocation("/");
+              }} 
+              className="w-full"
+            >
+              Sign Out
+            </Button>
+            <Button onClick={() => setLocation("/")} variant="outline" className="w-full">
+              Back to Home
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Admin user - show dashboard
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
