@@ -54,5 +54,6 @@
 ## Bug Fixes
 - [x] Fix admin panel login - add proper login button and authentication flow
 - [x] Add direct image file upload option (from phone gallery)
-- [x] Fix business info saving and display on website
+- [x] Fix business info saving and display on website (added refetch)
 - [x] Fix order tracking system
+- [x] Fix missing imports in server code (eq, desc, COOKIE_NAME)

@@ -1,4 +1,4 @@
-import { eq, like, desc } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, gallery, customers, orders, businessInfo, InsertGallery, InsertCustomer, InsertOrder, InsertBusinessInfo } from "../drizzle/schema";
 import { ENV } from './_core/env';

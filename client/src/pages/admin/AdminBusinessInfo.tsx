@@ -7,10 +7,11 @@ import { Loader2, Save } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AdminBusinessInfo() {
-  const { data: businessInfo, isLoading } = trpc.businessInfo.get.useQuery();
+  const { data: businessInfo, isLoading, refetch } = trpc.businessInfo.get.useQuery();
   const updateMutation = trpc.businessInfo.update.useMutation({
     onSuccess: () => {
       toast.success("Business info updated successfully!");
+      setTimeout(() => refetch(), 500);
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update business info");
