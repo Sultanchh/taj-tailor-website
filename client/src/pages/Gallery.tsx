@@ -4,9 +4,25 @@ import { Button } from "@/components/ui/button";
 import { APP_LOGO, SHOP_NAME } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { Loader2, ArrowLeft } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Gallery() {
   const { data: galleryImages, isLoading } = trpc.gallery.list.useQuery();
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -37,10 +53,16 @@ export default function Gallery() {
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm font-medium">Back to Home</span>
           </Link>
-          <h1 className="text-4xl font-serif font-bold mb-4">Our Design Gallery</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Explore our collection of exquisite shalwar kameez designs. Each piece showcases our commitment to quality craftsmanship and elegant styling.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-4xl font-serif font-bold mb-4">Our Design Gallery</h1>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Explore our collection of exquisite shalwar kameez designs. Each piece showcases our commitment to quality craftsmanship and elegant styling.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -52,9 +74,18 @@ export default function Gallery() {
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
             </div>
           ) : galleryImages && galleryImages.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div 
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
               {galleryImages.map((image) => (
-                <div key={image.id} className="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                <motion.div 
+                  key={image.id} 
+                  variants={item}
+                  className="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow"
+                >
                   <div className="relative overflow-hidden bg-muted h-64">
                     <img
                       src={image.imageUrl}
@@ -73,9 +104,9 @@ export default function Gallery() {
                       </Button>
                     </Link>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           ) : (
             <div className="text-center py-20">
               <p className="text-lg text-muted-foreground mb-6">No designs available yet. Check back soon!</p>
@@ -89,7 +120,13 @@ export default function Gallery() {
 
       {/* CTA Section */}
       <section className="py-20 bg-primary text-white">
-        <div className="container text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="container text-center"
+        >
           <h2 className="text-4xl font-serif font-bold mb-6">Don't See What You're Looking For?</h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Our expert tailors can create custom designs based on your preferences. Visit us for a personalized consultation.
@@ -99,7 +136,7 @@ export default function Gallery() {
               Book Your Consultation
             </Button>
           </Link>
-        </div>
+        </motion.div>
       </section>
 
       {/* Footer */}

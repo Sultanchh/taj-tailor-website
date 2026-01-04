@@ -7,6 +7,7 @@ import { APP_LOGO, SHOP_NAME } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, Check, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 export default function Booking() {
   const [formData, setFormData] = useState({
@@ -91,141 +92,153 @@ export default function Booking() {
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm font-medium">Back to Home</span>
           </Link>
-          <h1 className="text-4xl font-serif font-bold mb-4">Book Your Visit</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Schedule a visit to our shop and let our expert tailors help you create the perfect shalwar kameez.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-4xl font-serif font-bold mb-4">Book Your Visit</h1>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Schedule a visit to our shop and let our expert tailors help you create the perfect shalwar kameez.
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* Booking Form */}
       <section className="py-20">
         <div className="container max-w-2xl">
-          {submitted ? (
-            <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-              <div className="flex justify-center mb-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
-                  <Check className="w-8 h-8 text-green-600" />
-                </div>
-              </div>
-              <h2 className="text-3xl font-serif font-bold mb-4">Booking Confirmed!</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Thank you for booking your visit. Your unique visit card number is:
-              </p>
-              <div className="bg-primary/10 rounded-lg p-6 mb-8">
-                <p className="text-sm text-muted-foreground mb-2">Your Visit Card Number</p>
-                <p className="text-3xl font-serif font-bold text-primary">{cardNumber}</p>
-              </div>
-              <p className="text-muted-foreground mb-8">
-                Please save this number. You can use it to track your order status online. We'll contact you soon to confirm your visit time.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/">
-                  <Button>Back to Home</Button>
-                </Link>
-                <Link href="/track">
-                  <Button variant="outline">Track Your Order</Button>
-                </Link>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8">
-              <div className="space-y-6">
-                {/* Name */}
-                <div>
-                  <label className="block text-sm font-medium mb-2">Full Name *</label>
-                  <Input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                    required
-                  />
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <label className="block text-sm font-medium mb-2">Phone Number *</label>
-                  <Input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+92-300-XXXXXXX"
-                    required
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email Address *</label>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
-
-                {/* Preferred Visit Date */}
-                <div>
-                  <label className="block text-sm font-medium mb-2">Preferred Visit Date</label>
-                  <Input
-                    type="date"
-                    name="preferredVisitDate"
-                    value={formData.preferredVisitDate}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                {/* Preferred Visit Time */}
-                <div>
-                  <label className="block text-sm font-medium mb-2">Preferred Visit Time</label>
-                  <Input
-                    type="text"
-                    name="preferredVisitTime"
-                    value={formData.preferredVisitTime}
-                    onChange={handleChange}
-                    placeholder="e.g., 10:00 AM - 12:00 PM"
-                  />
-                </div>
-
-                {/* Notes */}
-                <div>
-                  <label className="block text-sm font-medium mb-2">Design Ideas or Special Requests</label>
-                  <Textarea
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                    placeholder="Tell us about your design preferences, fabric choices, or any special requirements..."
-                    rows={5}
-                  />
-                </div>
-
-                {/* Info Box */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
-                  <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <div className="text-sm text-blue-800">
-                    <p className="font-medium mb-1">What happens next?</p>
-                    <p>We'll contact you to confirm your visit time and discuss your design preferences. You'll receive a unique visit card number for tracking your order.</p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {submitted ? (
+              <div className="bg-white rounded-xl shadow-lg p-12 text-center">
+                <div className="flex justify-center mb-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
+                    <Check className="w-8 h-8 text-green-600" />
                   </div>
                 </div>
-
-                {/* Submit Button */}
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full bg-primary hover:bg-primary/90"
-                  disabled={createCustomerMutation.isPending}
-                >
-                  {createCustomerMutation.isPending ? "Booking..." : "Confirm Booking"}
-                </Button>
+                <h2 className="text-3xl font-serif font-bold mb-4">Booking Confirmed!</h2>
+                <p className="text-lg text-muted-foreground mb-8">
+                  Thank you for booking your visit. Your unique visit card number is:
+                </p>
+                <div className="bg-primary/10 rounded-lg p-6 mb-8">
+                  <p className="text-sm text-muted-foreground mb-2">Your Visit Card Number</p>
+                  <p className="text-3xl font-serif font-bold text-primary">{cardNumber}</p>
+                </div>
+                <p className="text-muted-foreground mb-8">
+                  Please save this number. You can use it to track your order status online. We'll contact you soon to confirm your visit time.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/">
+                    <Button>Back to Home</Button>
+                  </Link>
+                  <Link href="/track">
+                    <Button variant="outline">Track Your Order</Button>
+                  </Link>
+                </div>
               </div>
-            </form>
-          )}
+            ) : (
+              <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8">
+                <div className="space-y-6">
+                  {/* Name */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Full Name *</label>
+                    <Input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your full name"
+                      required
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Phone Number *</label>
+                    <Input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+92-300-XXXXXXX"
+                      required
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Email Address *</label>
+                    <Input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="your@email.com"
+                      required
+                    />
+                  </div>
+
+                  {/* Preferred Visit Date */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Preferred Visit Date</label>
+                    <Input
+                      type="date"
+                      name="preferredVisitDate"
+                      value={formData.preferredVisitDate}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  {/* Preferred Visit Time */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Preferred Visit Time</label>
+                    <Input
+                      type="text"
+                      name="preferredVisitTime"
+                      value={formData.preferredVisitTime}
+                      onChange={handleChange}
+                      placeholder="e.g., 10:00 AM - 12:00 PM"
+                    />
+                  </div>
+
+                  {/* Notes */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Design Ideas or Special Requests</label>
+                    <Textarea
+                      name="notes"
+                      value={formData.notes}
+                      onChange={handleChange}
+                      placeholder="Tell us about your design preferences, fabric choices, or any special requirements..."
+                      rows={5}
+                    />
+                  </div>
+
+                  {/* Info Box */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
+                    <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm text-blue-800">
+                      <p className="font-medium mb-1">What happens next?</p>
+                      <p>We'll contact you to confirm your visit time and discuss your design preferences. You'll receive a unique visit card number for tracking your order.</p>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-primary hover:bg-primary/90"
+                    disabled={createCustomerMutation.isPending}
+                  >
+                    {createCustomerMutation.isPending ? "Booking..." : "Confirm Booking"}
+                  </Button>
+                </div>
+              </form>
+            )}
+          </motion.div>
         </div>
       </section>
 
