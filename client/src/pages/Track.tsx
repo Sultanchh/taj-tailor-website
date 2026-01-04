@@ -6,6 +6,7 @@ import { APP_LOGO, SHOP_NAME } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, Search, CheckCircle, Clock, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 export default function Track() {
   const [cardNumber, setCardNumber] = useState("");
@@ -107,43 +108,60 @@ export default function Track() {
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm font-medium">Back to Home</span>
           </Link>
-          <h1 className="text-4xl font-serif font-bold mb-4">Track Your Order</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Enter your visit card number to check the status of your shalwar kameez order.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-4xl font-serif font-bold mb-4">Track Your Order</h1>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Enter your visit card number to check the status of your shalwar kameez order.
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* Search Section */}
       <section className="py-20">
         <div className="container max-w-2xl">
-          <form onSubmit={handleSearch} className="bg-white rounded-xl shadow-lg p-8 mb-8">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">Visit Card Number</label>
-                <div className="flex gap-2">
-                  <Input
-                    type="text"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    placeholder="e.g., TAJ-XXXXXXX-XXXXXX"
-                    className="flex-1"
-                  />
-                  <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90">
-                    <Search className="w-4 h-4 mr-2" />
-                    Search
-                  </Button>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <form onSubmit={handleSearch} className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Visit Card Number</label>
+                  <div className="flex gap-2">
+                    <Input
+                      type="text"
+                      value={cardNumber}
+                      onChange={(e) => setCardNumber(e.target.value)}
+                      placeholder="e.g., TAJ-XXXXXXX-XXXXXX"
+                      className="flex-1"
+                    />
+                    <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90">
+                      <Search className="w-4 h-4 mr-2" />
+                      Search
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    You received this number when you booked your visit.
+                  </p>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">
-                  You received this number when you booked your visit.
-                </p>
               </div>
-            </div>
-          </form>
+            </form>
+          </motion.div>
 
           {/* Order Status Display */}
           {searched && orderData && customerData && (
-            <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
               {/* Customer Info */}
               <div className="bg-white rounded-xl shadow-lg p-8">
                 <h2 className="text-2xl font-serif font-bold mb-6">Customer Information</h2>
@@ -279,12 +297,17 @@ export default function Track() {
                   Search Another Card
                 </Button>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* No Results */}
           {searched && !orderData && (
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="bg-white rounded-xl shadow-lg p-8 text-center"
+            >
               <AlertCircle className="w-12 h-12 text-yellow-600 mx-auto mb-4" />
               <h3 className="text-xl font-serif font-bold mb-2">Card Not Found</h3>
               <p className="text-muted-foreground mb-6">
@@ -304,7 +327,7 @@ export default function Track() {
                   <Button>Contact Us</Button>
                 </Link>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </section>

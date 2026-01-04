@@ -4,6 +4,7 @@ import { Scissors, Sparkles, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
 import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { data: businessInfo, isLoading: businessLoading } = trpc.businessInfo.get.useQuery();
@@ -40,29 +41,64 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary/80 to-accent/20">
         {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"
+        />
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 2, delay: 0.5, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
+        />
         
         <div className="container relative z-10 text-center py-20">
-          <div className="mb-8 flex justify-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 flex justify-center"
+          >
             <div className="inline-block p-4 bg-white/10 backdrop-blur rounded-2xl">
               <Scissors className="w-12 h-12 text-secondary" />
             </div>
-          </div>
+          </motion.div>
           
-          <h1 className="text-5xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-5xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight"
+          >
             Custom Shalwar Kameez
-          </h1>
+          </motion.h1>
           
-          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto"
+          >
             {SHOP_TAGLINE}
-          </p>
+          </motion.p>
           
-          <p className="text-lg text-white/80 mb-12 max-w-2xl mx-auto">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg text-white/80 mb-12 max-w-2xl mx-auto"
+          >
             Experience the perfect blend of tradition and craftsmanship. Visit Taj Tailor in {shopCity} for bespoke tailoring that celebrates your style.
-          </p>
+          </motion.p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
             <Link href="/booking">
               <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-primary font-semibold">
                 Book Your Visit
@@ -73,16 +109,30 @@ export default function Home() {
                 View Designs
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Services Section */}
       <section className="py-20 bg-background">
         <div className="container">
-          <h2 className="text-4xl font-serif font-bold text-center mb-16">Our Services</h2>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl font-serif font-bold text-center mb-16"
+          >
+            Our Services
+          </motion.h2>
           <div className="grid md:grid-cols-2 gap-12">
-            <div className="bg-white rounded-xl p-8 shadow-md border border-border">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-white rounded-xl p-8 shadow-md border border-border"
+            >
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                 <Scissors className="w-6 h-6 text-primary" />
               </div>
@@ -90,8 +140,14 @@ export default function Home() {
               <p className="text-muted-foreground">
                 Bring your vision to life with our expert custom stitching services. We create beautiful, perfectly fitted shalwar kameez tailored to your preferences.
               </p>
-            </div>
-            <div className="bg-white rounded-xl p-8 shadow-md border border-border">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-white rounded-xl p-8 shadow-md border border-border"
+            >
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
                 <Sparkles className="w-6 h-6 text-accent" />
               </div>
@@ -99,7 +155,7 @@ export default function Home() {
               <p className="text-muted-foreground">
                 Perfect fit guaranteed. Our skilled tailors provide professional alteration services to ensure your garments fit you beautifully.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -108,7 +164,12 @@ export default function Home() {
       <section className="py-20 bg-background">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-4xl font-serif font-bold mb-6">Why Choose Taj Tailor?</h2>
               <p className="text-lg text-muted-foreground mb-6">
                 With years of experience in traditional tailoring, Taj Tailor has become {shopCity}'s trusted name for custom shalwar kameez. We combine traditional craftsmanship with modern design sensibilities.
@@ -135,8 +196,14 @@ export default function Home() {
                   <span>Competitive pricing</span>
                 </li>
               </ul>
-            </div>
-            <div className="bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl p-12 text-center">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl p-12 text-center"
+            >
               <div className="inline-block p-8 bg-white rounded-xl shadow-lg">
                 <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
                 <h3 className="text-2xl font-serif font-bold mb-2">Visit Us</h3>
@@ -154,14 +221,20 @@ export default function Home() {
                   <Button variant="outline" className="w-full">Get Directions</Button>
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-primary text-white">
-        <div className="container text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="container text-center"
+        >
           <h2 className="text-4xl font-serif font-bold mb-6">Ready to Create Your Perfect Shalwar Kameez?</h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Book your visit today and let our expert tailors bring your vision to life.
@@ -171,7 +244,7 @@ export default function Home() {
               Schedule Your Appointment
             </Button>
           </Link>
-        </div>
+        </motion.div>
       </section>
 
       {/* Footer */}

@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { APP_LOGO, SHOP_NAME, SHOP_PHONE, SHOP_EMAIL, SHOP_ADDRESS } from "@/const";
 import { ArrowLeft, Phone, Mail, MapPin, Clock } from "lucide-react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -75,10 +76,16 @@ export default function Contact() {
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm font-medium">Back to Home</span>
           </Link>
-          <h1 className="text-4xl font-serif font-bold mb-4">Contact Us</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Have questions? We'd love to hear from you. Get in touch with us today.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-4xl font-serif font-bold mb-4">Contact Us</h1>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Have questions? We'd love to hear from you. Get in touch with us today.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -87,7 +94,12 @@ export default function Contact() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-white rounded-xl shadow-lg p-8"
+            >
               <h2 className="text-2xl font-serif font-bold mb-6">Send us a Message</h2>
               
               {submitted ? (
@@ -171,10 +183,15 @@ export default function Contact() {
                   </Button>
                 </form>
               )}
-            </div>
+            </motion.div>
 
             {/* Contact Information */}
-            <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-6"
+            >
               {/* Direct Contact */}
               <div className="bg-white rounded-xl shadow-lg p-8">
                 <h2 className="text-2xl font-serif font-bold mb-6">Get in Touch</h2>
@@ -265,7 +282,7 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
